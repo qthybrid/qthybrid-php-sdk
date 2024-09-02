@@ -1,0 +1,18 @@
+{
+    "name": "qthybrid/qthybrid-php-sdk",
+    "description": "QThybrid PHP SDK for HTTP API",
+    "type": "project",
+    "license": "Apache-2.0",
+    
+    "require": {
+        "php": ">= 5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "QThybrid\\": ""
+      }
+    }
+}
