@@ -15,10 +15,12 @@ class QThybrid_SDK {
 
 	private function apiRequest($api_url, $app_method = 'GET', $api_data) {
 
+		$url = "{$this->endpoint}$api_url";
+
 		$init = curl_init();
 		curl_setopt($init, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($init, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($init, CURLOPT_URL, 'https://test.cloudvlt.net/api/' . $api_url . '.json');
+		curl_setopt($init, CURLOPT_URL, $url);
 		curl_setopt($init, CURLOPT_POST, true);
 
 		$content = curl_exec($init);
