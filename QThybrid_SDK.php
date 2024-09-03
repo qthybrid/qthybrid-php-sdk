@@ -7,21 +7,29 @@ class QThybrid_SDK {
 	protected $endpoint;
 	protected $auth_token;
 
+	/**
+	 * 
+	 * @param mixed $endpoint example http://test.cloudvlt.net/api
+	 * @param mixed $auth_token optianal when calling unauthenticated requests
+	 * @return void 
+	 */
+
 	function __construct($endpoint, $auth_token = null) {
 
 		$this->endpoint = $endpoint;
 		$this->auth_token = $auth_token;
 	}
 
-	private function apiRequest($api_url, $app_method = 'GET', $api_data) {
+	private function apiRequest($api_url, $app_method = 'GET', $api_data = []) {
 
-		$url = "{$this->endpoint}$api_url";
+		$url = "{$this->endpoint}/$api_url";
 
 		$init = curl_init();
 		curl_setopt($init, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($init, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($init, CURLOPT_URL, $url);
-		curl_setopt($init, CURLOPT_POST, true);
+		curl_setopt( $init, CURLOPT_CUSTOMREQUEST, $app_method );
+		curl_setopt( $init, CURLOPT_POSTFIELDS, $api_data );
 
 		$content = curl_exec($init);
 
@@ -42,6 +50,13 @@ class QThybrid_SDK {
 		$url = 'auth/login';
 
 		return $this->apiRequest($url, 'POST', $credentials);
+	}
+
+	public function apiGetLoginByUrl()
+	{
+		$url = 'auth/link';
+
+		return $this->apiRequest($url, 'GET');
 	}
 
 }
