@@ -25,6 +25,14 @@ class QThybrid_SDK {
 		$url = "{$this->endpoint}/$api_url";
 
 		$init = curl_init();
+
+		$headers = ['Content-Type: application/json'];
+
+		if ($this->auth_token) {
+			$authorization = "Authorization: Bearer {$this->auth_token}";
+			$headers = ['Content-Type: application/json', $authorization];			
+		}
+		curl_setopt($init, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($init, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($init, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($init, CURLOPT_URL, $url);
@@ -55,6 +63,13 @@ class QThybrid_SDK {
 	public function apiGetLoginByUrl()
 	{
 		$url = 'auth/link';
+
+		return $this->apiRequest($url, 'GET');
+	}
+
+	public function apiGetPlayer()
+	{
+		$url = 'account/user';
 
 		return $this->apiRequest($url, 'GET');
 	}
